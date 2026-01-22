@@ -6,12 +6,13 @@ import IcActiveEmployee from "../../icons/ic-active-employee.svg";
 import IcEmployee from "../../icons/ic-employee.svg";
 import IcDepartment from "../../icons/ic-department.svg";
 import { useAuth } from "../../context/AuthContext";
-import IcPlus from "../../icons/ic-plus.svg";
 
 import AddEmployeeModal from "../../components/modal/AddEmployeeModal";
 import AddEventModal from "../../components/modal/event/AddEventModal";
 import AddPosition from "../../components/modal/position/addPosition";
 import AddDepartment from "../../components/modal/department/addDepartment";
+
+import QuickActions from "../../components/navigation/QuickActions";
 
 function Dashboard() {
   const { user, loading } = useAuth();
@@ -32,6 +33,31 @@ function Dashboard() {
     departments: 0,
     activeEmployees: 0,
   });
+
+  // display buttons in the quick action
+  const eventActions = [
+    {
+      label: "Add Employee",
+      onClick: () => setOpenEmployee(true),
+      className: "add-employee",
+    },
+    {
+      label: "Create Event",
+      onClick: () => setOpenEvent(true),
+      className: "create-event",
+    },
+    {
+      label: "Add Department",
+      onClick: () => setOpenDepartment(true),
+      className: "add-department",
+    },
+    {
+      label: "Add Position",
+      onClick: () => setOpenPosition(true),
+      className: "add-position",
+    },
+  ];
+
   useEffect(() => {
     async function fetchStats() {
       try {
@@ -72,48 +98,12 @@ function Dashboard() {
             )}
           </header>
 
-          {/* //TODO: isolate this to its own component  */}
-          {user?.role === "admin" && (
-            <div className="add">
-              <div className="plus">
-                <button
-                  className={`btn-plus ${open ? "open" : ""}`}
-                  onClick={handleToggle}
-                >
-                  <img src={IcPlus} alt="Plus" />
-                </button>
-              </div>
-              <ul className={`add-list ${open ? "show" : ""}`}>
-                <li className="li-add">
-                  <button
-                    className="btn add-employee"
-                    onClick={() => setOpenEmployee(true)}
-                  >
-                    Add Employee
-                  </button>
-                </li>
-                <li className="li-add">
-                  <button
-                    className="btn create-event"
-                    onClick={() => setOpenEvent(true)}
-                  >
-                    Create Event
-                  </button>
-                </li>
-                <li className="li-add">
-                  <button className="btn add-department" onClick={() => setOpenDepartment(true)}>Add Department</button>
-                </li>
-                <li className="li-add">
-                  <button
-                    className="btn add-department"
-                    onClick={() => setOpenPosition(true)}
-                  >
-                    Add Position
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+          <QuickActions
+            actions={eventActions}
+            open={open}
+            handleToggle={handleToggle}
+            user={user}
+          />
 
           <AddEmployeeModal
             isOpen={isOpenEmployee}
