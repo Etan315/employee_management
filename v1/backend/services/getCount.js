@@ -5,7 +5,7 @@ async function getCount() {
   const [employees, departments, active] = await Promise.all([
     pool.query("SELECT COUNT(*) FROM employees"),
     pool.query("SELECT COUNT(*) FROM departments"),
-    pool.query("SELECT COUNT(*) FROM employees WHERE employment_status = 'Active'"),
+    pool.query("SELECT COUNT(*) FROM attendance WHERE is_active = true")
   ]);
 
   return {
