@@ -16,10 +16,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const allowOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: allowOrigin,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
