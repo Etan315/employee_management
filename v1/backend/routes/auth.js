@@ -21,7 +21,7 @@ router.get("/verify", verifyToken, (req, res) => {
 });
 
 router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/api/login", loginUser);
 
 router.post("/addemployee", addEmployee);
 router.post("/addevent", upload.array("attachments"), addEvent);
@@ -29,7 +29,7 @@ router.post("/getemployeelist", getEmployeeList);
 
 router.post("/addposition", addPosition);
 router.post("/adddepartment", addDepartment); 
-router.get("/api/getEventList", getEventList);
+router.get("/getEventList", getEventList);
 
 router.get("/counts", countActive);
 

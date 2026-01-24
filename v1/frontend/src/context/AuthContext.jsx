@@ -9,8 +9,9 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     console.log("🔍 Verifying user session...");
+    const API_URL = 'http://localhost:5000/api';
     try {
-      const res = await fetch("http://localhost:5000/verify", {
+      const res = await fetch(`${API_URL}/verify`, {
         method: "GET",
         credentials: "include",
       });
