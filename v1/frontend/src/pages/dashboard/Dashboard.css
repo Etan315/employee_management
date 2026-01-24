@@ -179,3 +179,23 @@ button.btn-plus {
 .icon.calendar {
   fill: var(--blue);
 }
+
+.icon.view {
+  stroke: var(--blue);
+}
+
+.event-info {
+  display: flex;
+  flex-direction: row;
+  margin-block: 15px;
+  background-color: var(--white);
+  border-radius: 5px;
+  margin-inline: 20px;
+}
+
+.left.events {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: unset;
+}
