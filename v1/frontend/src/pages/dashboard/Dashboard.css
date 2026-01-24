@@ -175,3 +175,7 @@ button.btn-plus {
 .add-list.show .li-add:nth-child(2) { transition-delay: 0.2s; }
 .add-list.show .li-add:nth-child(3) { transition-delay: 0.25s; }
 .add-list.show .li-add:nth-child(4) { transition-delay: 0.30s; }
+
+.icon.calendar {
+  fill: var(--blue);
+}

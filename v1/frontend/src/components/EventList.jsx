@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import getEvent from "../api/getEvent";
 import IcView from "../../src/icons/ic-view.svg";
+import CalendarIcon from "../../src/icons/ic-calendar.svg?react";
 
 //utilities:
 import truncate from "../utils/text";
 
 const EventList = ({ event }) => {
-
   if (!event) return null;
 
   return (
@@ -15,6 +13,7 @@ const EventList = ({ event }) => {
         <p className="event-title">{event.title}</p>
 
         <div className="date-time">
+          <CalendarIcon className="icon calendar"/>
           <span className="date">
             {new Date(event.event_date).toLocaleDateString("en-US", {
               month: "short",
