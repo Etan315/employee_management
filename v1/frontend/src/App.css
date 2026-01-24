@@ -60,3 +60,7 @@ main {
   transition: margin-left 0.3s ease;
   overflow-y: auto;
 }
+
+li {
+  list-style: none;
+}
