@@ -1,4 +1,4 @@
-import IcView from "../../src/icons/ic-view.svg";
+import IcView from "../../src/icons/ic-view.svg?react";
 import CalendarIcon from "../../src/icons/ic-calendar.svg?react";
 
 //utilities:
@@ -10,26 +10,33 @@ const EventList = ({ event }) => {
   return (
     <>
       <div className="event-info">
-        <p className="event-title">{event.title}</p>
-
-        <div className="date-time">
-          <CalendarIcon className="icon calendar"/>
-          <span className="date">
-            {new Date(event.event_date).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </span>
-          <span className="separator"> - </span>
-          <span className="time">{event.event_time || "TBA"}</span>
+        <div className="left events">
+          <p className="event-title">{event.title}</p>
+          <p className="event-location">
+            {event.city + " " + event.municipality}
+          </p>
+          <div className="date-time">
+            <CalendarIcon className="icon calendar" />
+            <span className="date">
+              {new Date(event.event_date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+            <span className="separator"> - </span>
+            <span className="time">
+              {event.time_start} - {event.time_end}
+            </span>
+          </div>
         </div>
 
         <p className="description">{truncate(event.description)}</p>
+
+        <button className="btn view-event">
+          <IcView className="icon view" />
+        </button>
       </div>
-      <button className="btn view-event">
-        <img src={IcView} alt="view button" />
-      </button>
     </>
   );
 };
