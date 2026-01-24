@@ -19,9 +19,10 @@ export default function addDepartment({ isOpen, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const API_URL = 'http://localhost:5000/api';
 
     try {
-      const res = await fetch("http://localhost:5000/adddepartment", {
+      const res = await fetch(`${API_URL}/adddepartment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

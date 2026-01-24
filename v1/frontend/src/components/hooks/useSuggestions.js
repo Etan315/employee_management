@@ -11,8 +11,9 @@ export function useSuggestions(query, endpoint) {
     }
 
     const fetchData = async () => {
+      const API_URL = 'http://localhost:5000/api';
       try {
-        const response = await axios.get(`http://localhost:5000/api/${endpoint}?namePrefix=${query}`);
+        const response = await axios.get(`${API_URL}/${endpoint}?namePrefix=${query}`);
         setSuggestions(Array.isArray(response.data) ? response.data : []);
       } catch (err) {
         setSuggestions([]);

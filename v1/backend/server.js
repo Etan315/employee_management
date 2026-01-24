@@ -32,7 +32,7 @@ seedAdmin().then(() => {
   console.log("🔑 Admin seed check completed.");
 
   // Public routes
-  app.use("/", authRoutes);
+  app.use("/api", authRoutes);
 
   // Protected routes
   app.get("/dashboard", verifyToken, (req, res) => {
