@@ -148,7 +148,7 @@ seedAdmin().then(() => {
   app.use("/api/stats", statsRoutes);
 
   app.post("/logout", (req, res) => {
-    res.clearCookie("token", {
+    res.clearCookie("login_token", {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
