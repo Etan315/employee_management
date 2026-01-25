@@ -1,7 +1,7 @@
 import { useEffect, useState, React } from "react";
 import "./Dashboard.css";
+import "./ListEvent.dashboar.css";
 import Navigation from "../../components/navigation/Navigation";
-import IcView from "../../icons/ic-view.svg";
 import IcActiveEmployee from "../../icons/ic-active-employee.svg";
 import IcEmployee from "../../icons/ic-employee.svg";
 import IcDepartment from "../../icons/ic-department.svg";

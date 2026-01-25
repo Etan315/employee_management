@@ -1,5 +1,5 @@
-import IcView from "../../src/icons/ic-view.svg?react";
 import CalendarIcon from "../../src/icons/ic-calendar.svg?react";
+import LocationIcon from "../icons/ic-location.svg?react";
 
 //utilities:
 import truncate from "../utils/text";
@@ -11,31 +11,35 @@ const EventList = ({ event }) => {
     <>
       <div className="event-info">
         <div className="left events">
-          <p className="event-title">{event.title}</p>
+          <h3 className="event-title">{event.title}</h3>
           <p className="event-location">
+            <LocationIcon className="icon location" />
             {event.city + " " + event.municipality}
           </p>
           <div className="date-time">
             <CalendarIcon className="icon calendar" />
-            <span className="date">
-              {new Date(event.event_date).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-            <span className="separator"> - </span>
-            <span className="time">
-              {event.time_start} - {event.time_end}
-            </span>
+            <div className="sched-time">
+              <strong>
+                <i>
+                  <p className="date">
+                    {new Date(event.event_date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                </i>
+              </strong>
+              <p className="time">
+                <span className="from"><strong>from:</strong> {event.time_start} </span> 
+                <br/>
+                <span className="to"><strong>to:</strong> {event.time_end}</span>
+              </p>
+            </div>
           </div>
         </div>
 
         <p className="description">{truncate(event.description)}</p>
-
-        <button className="btn view-event">
-          <IcView className="icon view" />
-        </button>
       </div>
     </>
   );

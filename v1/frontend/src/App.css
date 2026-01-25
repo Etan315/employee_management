@@ -84,3 +84,7 @@ li {
 p {
   text-align: left;
 }
+
+strong {
+  font-weight: 600;
+}
