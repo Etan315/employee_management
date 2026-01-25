@@ -4,7 +4,7 @@ const pool = require("./../db/pool");
 
 const verifyToken = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.login_token;
     if (!token)
       return res
         .status(401)
