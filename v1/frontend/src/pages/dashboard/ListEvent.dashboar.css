@@ -1,0 +1,14 @@
+p.description {
+  font-size: var(--text-sm);
+}
+
+.icon.view {
+    min-width: 24px;
+    height: auto;
+}
+
+.date-time {
+    display: flex;
+    align-items: center;
+}
+
