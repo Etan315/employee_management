@@ -17,22 +17,34 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const allowOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+const allowOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   cors({
     origin: allowOrigin,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
+
+// Public routes
+app.use("/api", authRoutes);
+
+//counts statictics of employees
+app.use("/api/stats", statsRoutes);
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("login_token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.json({ message: "Logged out successfully" });
+});
 
 // Run admin seed before the server starts
 seedAdmin().then(() => {
   console.log("🔑 Admin seed check completed.");
-
-  // Public routes
-  app.use("/api", authRoutes);
 
   // Protected routes
   app.get("/dashboard", verifyToken, (req, res) => {
@@ -73,7 +85,7 @@ seedAdmin().then(() => {
       if (namePrefix) {
         const query = namePrefix.toLowerCase();
         cities = cities.filter((city) =>
-          city.name.toLowerCase().includes(query)
+          city.name.toLowerCase().includes(query),
         );
       }
 
@@ -99,14 +111,14 @@ seedAdmin().then(() => {
 
     try {
       const response = await axios.get(
-        "https://psgc.gitlab.io/api/municipalities"
+        "https://psgc.gitlab.io/api/municipalities",
       );
       let municipalities = response.data;
 
       if (namePrefix) {
         const query = namePrefix.toLowerCase();
         municipalities = municipalities.filter((mun) =>
-          mun.name.toLowerCase().includes(query)
+          mun.name.toLowerCase().includes(query),
         );
       }
 
@@ -142,18 +154,6 @@ seedAdmin().then(() => {
       console.error("Error fetching participants:", err.message);
       res.status(500).json({ error: "Failed to fetch participants" });
     }
-  });
-
-  //counts statictics of employees
-  app.use("/api/stats", statsRoutes);
-
-  app.post("/logout", (req, res) => {
-    res.clearCookie("login_token", {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
-    });
-    res.json({ message: "Logged out successfully" });
   });
 
   const PORT = process.env.PORT || 5000;
