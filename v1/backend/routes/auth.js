@@ -4,14 +4,14 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 const verifyToken = require('../middlewares/verifyToken');
-const { registerUser, loginUser} = require("../controllers/authController");
-const { addEmployee } = require("../controllers/addEmployee");
-const { addEvent } = require("../controllers/addEvent");
-const { addPosition } = require("../controllers/addPosition");
-const { addDepartment } = require("../controllers/addDepartment");
-const { getEmployeeList } = require("../controllers/getEmployeeList");
-const { getEventList } = require("../controllers/getEventList");
-const { countActive } = require("../controllers/countActive");
+const { registerUser, loginUser} = require("../controllers/authController.controller");
+const { addEmployee } = require("../controllers/addEmployee.controller");
+const { addEvent } = require("../controllers/addEvent.controller");
+const { addPosition } = require("../controllers/addPosition.controller");
+const { addDepartment } = require("../controllers/adddepartment.controller");
+const { getEmployeeList } = require("../controllers/getEmployeeList.controller");
+const { getEventList } = require("../controllers/getEventList.controller");
+const { countActive } = require("../controllers/countActive.controller");
 
 const uploadPDF = require("../middlewares/uploadPDF");
 
