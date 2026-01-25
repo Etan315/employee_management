@@ -21,7 +21,7 @@ router.get("/verify", verifyToken, (req, res) => {
 });
 
 router.post("/register", registerUser);
-router.post("/api/login", loginUser);
+router.post("/login", loginUser);
 
 router.post("/addemployee", addEmployee);
 router.post("/addevent", upload.array("attachments"), addEvent);
