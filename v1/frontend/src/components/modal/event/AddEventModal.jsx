@@ -89,7 +89,8 @@ export default function AddEventModal({ isOpen, onClose }) {
     });
 
     try {
-      const res = await fetch("http://localhost:5000/addevent", {
+      const API_URL = 'http://localhost:5000/api';
+      const res = await fetch(`${API_URL}/addevent`, {
         method: "POST",
         body: data, // no headers needed
       });

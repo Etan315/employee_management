@@ -42,7 +42,8 @@ export default function AddEmployeeModal({ isOpen, onClose }) {
     if (activeIndex !== slides.length - 1) return;
 
     try {
-      const res = await fetch("http://localhost:5000/addemployee", {
+      const API_URL="http://localhost:5000/api"
+      const res = await fetch(`${API_URL}/addemployee`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
