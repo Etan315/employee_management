@@ -1,5 +1,6 @@
 const pool = require("../db/pool");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt")
 
 exports.addEmployee = async (req, res) => {
   const data = req.body;
@@ -20,10 +21,11 @@ exports.addEmployee = async (req, res) => {
   try {
     await client.query("BEGIN");
 
-    // Generate user_id
+    const saltRounds = 10;
     const user_id = crypto.randomInt(1000000000, 9999999999);
+    const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-    // Insert into users
+    
     const userQuery = `
       INSERT INTO users (user_id, username, email, password, role, created_at) 
       VALUES ($1, $2, $3, $4, $5, $6)
@@ -33,7 +35,7 @@ exports.addEmployee = async (req, res) => {
       user_id,
       data.username,
       data.email,
-      data.password,
+      hashedPassword,
       data.role,
       created_at,
     ];
