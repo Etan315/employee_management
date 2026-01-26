@@ -24,7 +24,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 router.post("/addemployee", addEmployee);
-router.post("/addevent", upload.array("attachments"), addEvent);
+router.post("/addevent", upload.array("attachment"), addEvent);
 router.post("/getemployeelist", getEmployeeList);
 
 router.post("/addposition", addPosition);
