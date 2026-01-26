@@ -1,7 +1,9 @@
 const ManagerModel = require("../models/ManagerInfo.model");
+const crypto = require("crypto")
 
 exports.managerController = async (req, res) => {
-  const { manager_id, user_id, position_id } = req.body;
+  const manager_id = crypto.randomInt(1000000000, 9999999999);
+  const { user_id, position_id } = req.body;
   try {
     const manager = await ManagerModel.addManager(
       manager_id,
