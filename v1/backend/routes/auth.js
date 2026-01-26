@@ -12,8 +12,9 @@ const { addDepartment } = require("../controllers/addDepartments.controller");
 const { getEmployeeList } = require("../controllers/getEmployeeList.controller");
 const { getEventList } = require("../controllers/getEventList.controller");
 const { countActive } = require("../controllers/countActive.controller");
+const { managerController } = require("../controllers/manager.controller");
 
-const uploadPDF = require("../middlewares/uploadPDF");
+// const uploadPDF = require("../middlewares/uploadPDF");
 
 
 router.get("/verify", verifyToken, (req, res) => {
@@ -29,6 +30,7 @@ router.post("/getemployeelist", getEmployeeList);
 
 router.post("/addposition", addPosition);
 router.post("/adddepartment", addDepartment); 
+router.post("/addmanager", managerController);
 router.get("/getEventList", getEventList);
 
 router.get("/counts", countActive);
