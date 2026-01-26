@@ -3,6 +3,7 @@ import LocationIcon from "../icons/ic-location.svg?react";
 
 //utilities:
 import truncate from "../utils/text";
+import { formatTime } from "../utils/time";
 
 const EventList = ({ event }) => {
   if (!event) return null;
@@ -31,9 +32,13 @@ const EventList = ({ event }) => {
                 </i>
               </strong>
               <p className="time">
-                <span className="from"><strong>from:</strong> {event.time_start} </span> 
-                <br/>
-                <span className="to"><strong>to:</strong> {event.time_end}</span>
+                <span className="from">
+                  <strong>from:</strong> {formatTime(event.time_start)}{" "}
+                </span>
+                <br />
+                <span className="to">
+                  <strong>to:</strong> {formatTime(event.time_end)}
+                </span>
               </p>
             </div>
           </div>
