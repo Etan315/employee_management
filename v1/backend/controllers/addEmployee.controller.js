@@ -1,6 +1,7 @@
 const pool = require("../db/pool");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt")
+const { generateId } = require("../utils/generateId.util");
 
 exports.addEmployee = async (req, res) => {
   const data = req.body;
@@ -22,7 +23,7 @@ exports.addEmployee = async (req, res) => {
     await client.query("BEGIN");
 
     const saltRounds = 10;
-    const user_id = crypto.randomInt(1000000000, 9999999999);
+    const user_id = generateId();
     const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
     
