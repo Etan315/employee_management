@@ -1,11 +1,12 @@
 const pool = require("../db/pool");
 const crypto = require("crypto");
+import { generateId } from "../utils/generateId.util";
 
 exports.addEvent = async (req, res) => {
   const data = req.body;
 
   try {
-    const event_id = crypto.randomInt(1000000000, 9999999999);
+    const event_id = generateId();
     const event_date = `${data.year}-${data.month}-${data.day}`;
 
     const attachment_url =
