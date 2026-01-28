@@ -1,9 +1,10 @@
 const pool = require("../db/pool");
 const crypto = require("crypto");
+import { generateId } from "../utils/generateId.util";
 
 exports.addPosition = async (req, res) => { 
   const data = req.body;
-  const position_id = crypto.randomInt(1_000_000_000, 9_999_999_999).toString();
+  const position_id = generateId();
 
   try {
     const query = `INSERT INTO positions (position_id, position_name) VALUES ($1, $2)`;
