@@ -1,7 +1,8 @@
 // utils/seedAdmin.js
-const bcrypt = require("bcryptjs");
-const { Pool } = require("pg");
-const crypto = require("crypto"); 
+import bcrypt from "bcryptjs";
+import pkg from "pg";
+const { Pool } = pkg;
+import { generateId } from "./generateId.util.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -22,7 +23,7 @@ async function seedAdmin() {
     }
 
     // Generate a 10-digit ID as seen in your other controllers
-    const userId = crypto.randomInt(1000000000, 9999999999); 
+    const userId = generateId(); 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Add user_id to the INSERT query
@@ -38,4 +39,4 @@ async function seedAdmin() {
   }
 }
 
-module.exports = seedAdmin;
+export default seedAdmin;

@@ -1,8 +1,7 @@
-const ManagerModel = require("../models/ManagerInfo.model");
-const crypto = require("crypto")
-import { generateId } from "../utils/generateId.util";  
+import ManagerModel from "../models/ManagerInfo.model.js";
+import { generateId } from "../utils/generateId.util.js";  
 
-exports.managerController = async (req, res) => {
+export const managerController = async (req, res) => {
   const manager_id = generateId();
   const { user_id, position_id } = req.body;
   try {

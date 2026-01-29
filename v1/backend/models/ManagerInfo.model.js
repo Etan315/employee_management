@@ -1,4 +1,4 @@
-const pool = require("../db/pool");
+import pool from "../db/pool.js";
 
 const addManager = {
   addManager: async (manager_id, user_id, position_id) => {
@@ -12,4 +12,4 @@ const addManager = {
   },
 };
 
-module.exports = addManager;
+export default addManager;

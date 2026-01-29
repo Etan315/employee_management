@@ -1,7 +1,5 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from "uuid";
 
-const generateId = () => {
-    return uuidv4(); 
+export const generateId = () => {
+  return uuidv4();
 };
-
-module.exports = { generateId };

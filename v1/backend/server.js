@@ -1,22 +1,21 @@
-const express = require("express");
-const axios = require("axios");
-const pool = require("./db/pool");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const authRoutes = require("./routes/auth");
-const { verifyToken } = require("./middlewares/authMiddleware");
-const seedAdmin = require("./utils/seedAdmin");
-
-const { verifyAdmin } = require("./middlewares/verifyAdmin.js");
-const statsRoutes = require("./routes/auth.js");
+// 1. Convert all requires to imports
+import express from "express";
+import axios from "axios";
+import pool from "./db/pool.js"; // Add .js
+import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/auth.js"; // Add .js
+import { verifyToken } from "./middlewares/authMiddleware.js"; // Add .js
+import seedAdmin from "./utils/seedAdmin.js";
+import { verifyAdmin } from "./middlewares/verifyAdmin.js"; 
+import statsRoutes from "./routes/auth.js"; 
+// 2. Initialize dotenv
 dotenv.config();
 
 const app = express();
-
 app.use(express.json());
 app.use(cookieParser());
-
 const allowOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   cors({

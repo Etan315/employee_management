@@ -1,8 +1,9 @@
-const pool = require("../db/pool");
-const crypto = require("crypto");
-import { generateId } from "../utils/generateId.util";
+import pool from "../db/pool.js";
+import { generateId } from "../utils/generateId.util.js";
 
-exports.addEvent = async (req, res) => {
+const newId = generateId();
+
+export const addEvent = async (req, res) => {
   const data = req.body;
 
   try {
