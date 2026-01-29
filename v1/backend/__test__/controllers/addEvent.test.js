@@ -1,6 +1,5 @@
 const { addEvent } = require("../../controllers/addEvent");
-const pool = require("../../db/pool");
-const crypto = require("crypto");
+import pool from "../db/pool.js";
 
 jest.mock("../../db/pool", () => ({
   query: jest.fn(),

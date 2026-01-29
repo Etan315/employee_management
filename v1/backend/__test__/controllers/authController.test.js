@@ -1,9 +1,7 @@
 // __tests__/controllers/authController.test.js
 const { registerUser } = require("../../controllers/authController");
-const pool = require("../../db/pool");
-const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
-
+import pool from "../../db/pool";
+import bcrypt from "bcryptjs;"
 // 🧩 Mock dependencies
 jest.mock("../../db/pool", () => ({ query: jest.fn() }));
 jest.mock("bcryptjs");

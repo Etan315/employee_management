@@ -1,7 +1,6 @@
 // __tests__/employeeController.test.js
 const { addEmployee } = require("../../controllers/addEmployee");
-const pool = require("../../db/pool");
-const crypto = require("crypto");
+import pool from "../db/pool.js";
 
 jest.mock("../../db/pool", () => {
   const mockPool = {
