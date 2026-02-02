@@ -22,11 +22,9 @@ async function seedAdmin() {
       return;
     }
 
-    // Generate a 10-digit ID as seen in your other controllers
     const userId = generateId(); 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Add user_id to the INSERT query
     await pool.query(
       `INSERT INTO users (user_id, username, email, password, role, created_at)
        VALUES ($1, $2, $3, $4, $5, NOW())`,
