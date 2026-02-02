@@ -1,17 +1,20 @@
 import { useEffect, useState, React } from "react";
 import "./Dashboard.css";
+import "./ListEvent.dashboar.css";
 import Navigation from "../../components/navigation/Navigation";
-import IcView from "../../icons/ic-view.svg";
 import IcActiveEmployee from "../../icons/ic-active-employee.svg";
 import IcEmployee from "../../icons/ic-employee.svg";
 import IcDepartment from "../../icons/ic-department.svg";
 import { useAuth } from "../../context/AuthContext";
-import IcPlus from "../../icons/ic-plus.svg";
 
 import AddEmployeeModal from "../../components/modal/AddEmployeeModal";
 import AddEventModal from "../../components/modal/event/AddEventModal";
 import AddPosition from "../../components/modal/position/addPosition";
 import AddDepartment from "../../components/modal/department/addDepartment";
+import EventList from "../../api/getEvent";
+import EventListItems from "../../components/EventList";
+
+import QuickActions from "../../components/navigation/QuickActions";
 
 function Dashboard() {
   const { user, loading } = useAuth();
@@ -20,6 +23,8 @@ function Dashboard() {
   const [isOpenEvent, setOpenEvent] = useState(false);
   const [isOpenPosition, setOpenPosition] = useState(false);
   const [isOpenDepartment, setOpenDepartment] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
   if (loading) return null;
 
   const handleToggle = () => {
@@ -32,7 +37,44 @@ function Dashboard() {
     departments: 0,
     activeEmployees: 0,
   });
+
+  // display buttons in the quick action
+  const eventActions = [
+    {
+      label: "Add Employee",
+      onClick: () => setOpenEmployee(true),
+      className: "add-employee",
+    },
+    {
+      label: "Create Event",
+      onClick: () => setOpenEvent(true),
+      className: "create-event",
+    },
+    {
+      label: "Add Department",
+      onClick: () => setOpenDepartment(true),
+      className: "add-department",
+    },
+    {
+      label: "Add Position",
+      onClick: () => setOpenPosition(true),
+      className: "add-position",
+    },
+  ];
+
   useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await EventList();
+        console.log("event-data: ", data);
+        setEvents(data);
+      } catch (err) {
+        console.error("Failed to fetch", err);
+      } finally {
+        setEventsLoading(false); // Use the local state here
+      }
+    }
+
     async function fetchStats() {
       try {
         const res = await fetch("/api/stats/counts");
@@ -46,6 +88,8 @@ function Dashboard() {
         console.error("Failed to load stats:", err);
       }
     }
+
+    loadData();
     fetchStats();
   }, []);
 
@@ -72,48 +116,12 @@ function Dashboard() {
             )}
           </header>
 
-          {/* //TODO: isolate this to its own component  */}
-          {user?.role === "admin" && (
-            <div className="add">
-              <div className="plus">
-                <button
-                  className={`btn-plus ${open ? "open" : ""}`}
-                  onClick={handleToggle}
-                >
-                  <img src={IcPlus} alt="Plus" />
-                </button>
-              </div>
-              <ul className={`add-list ${open ? "show" : ""}`}>
-                <li className="li-add">
-                  <button
-                    className="btn add-employee"
-                    onClick={() => setOpenEmployee(true)}
-                  >
-                    Add Employee
-                  </button>
-                </li>
-                <li className="li-add">
-                  <button
-                    className="btn create-event"
-                    onClick={() => setOpenEvent(true)}
-                  >
-                    Create Event
-                  </button>
-                </li>
-                <li className="li-add">
-                  <button className="btn add-department" onClick={() => setOpenDepartment(true)}>Add Department</button>
-                </li>
-                <li className="li-add">
-                  <button
-                    className="btn add-department"
-                    onClick={() => setOpenPosition(true)}
-                  >
-                    Add Position
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+          <QuickActions
+            actions={eventActions}
+            open={open}
+            handleToggle={handleToggle}
+            user={user}
+          />
 
           <AddEmployeeModal
             isOpen={isOpenEmployee}
@@ -175,29 +183,17 @@ function Dashboard() {
           <div className="logs-group">
             <div className="logs upcoming-event">
               <h2>Upcoming Event</h2>
-              <ul>
-                <li>
-                  <div className="event-info">
-                    <p>Event Title</p>
-
-                    <div className="date-time">
-                      <span className="date">Oct 12,2025</span>{" "}
-                      <span className="separator">-</span>{" "}
-                      <span className="time">2:00pm</span>
-                    </div>
-
-                    <p className="discription">
-                      Norem ipsum consectetur adipiscing elit.dolor sit amet,
-                      consectetur adipiscing Norem ipsum consectetur adipiscing
-                      elit.dolor adipiscing sit{" "}
-                      <span className="ellipsis">...</span>
-                    </p>
-                  </div>
-                  <button className="btn view-event">
-                    <img src={IcView} alt="view button" />
-                  </button>
-                </li>
-              </ul>
+              {eventsLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <ul>
+                  {events.map((event, index) => (
+                    <li key={event.event_id || event.id || index}>
+                      <EventListItems event={event} />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="logs recent-activity">
               <h2>Recent</h2>

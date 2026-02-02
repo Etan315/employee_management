@@ -1,6 +1,8 @@
 // utils/seedAdmin.js
-const bcrypt = require("bcryptjs");
-const { Pool } = require("pg");
+import bcrypt from "bcryptjs";
+import pkg from "pg";
+const { Pool } = pkg;
+import { generateId } from "./generateId.util.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -20,18 +22,19 @@ async function seedAdmin() {
       return;
     }
 
+    const userId = generateId(); 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await pool.query(
-      `INSERT INTO users (username, email, password, role)
-       VALUES ($1, $2, $3, $4)`,
-      [username, email, hashedPassword, "admin"]
+      `INSERT INTO users (user_id, username, email, password, role, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW())`,
+      [userId, username, email, hashedPassword, "admin", ]
     );
 
-    console.log("🎉 Default admin user created successfully!");
+    console.log("🎉 Default admin user created successfully with ID:", userId);
   } catch (error) {
     console.error("❌ Error seeding admin user:", error.message);
   }
 }
 
-module.exports = seedAdmin;
+export default seedAdmin;

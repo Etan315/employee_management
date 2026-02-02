@@ -14,7 +14,6 @@ form label {
   margin-bottom: 5px;
   display: block;
   font-size: var(--label);
-  margin: 0 10px;
 }
 
 .form-actions {

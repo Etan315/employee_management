@@ -8,4 +8,5 @@
 /frontend/coverage/
 /backend/coverage/
 
-/backend/pdf
+
+/backend/uploads

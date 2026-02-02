@@ -1,34 +1,49 @@
-const express = require("express");
-const axios = require("axios");
-const pool = require("./db/pool");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const authRoutes = require("./routes/auth");
-const { verifyToken } = require("./middlewares/authMiddleware");
-const seedAdmin = require("./utils/seedAdmin");
-
-const { verifyAdmin } = require("./middlewares/verifyAdmin.js");
-const statsRoutes = require("./routes/auth.js");
+// 1. Convert all requires to imports
+import express from "express";
+import axios from "axios";
+import pool from "./db/pool.js"; // Add .js
+import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/auth.js"; // Add .js
+import { verifyToken } from "./middlewares/authMiddleware.js"; // Add .js
+import seedAdmin from "./utils/seedAdmin.js";
+import { verifyAdmin } from "./middlewares/verifyAdmin.js"; 
+import statsRoutes from "./routes/auth.js"; 
+// 2. Initialize dotenv
 dotenv.config();
 
 const app = express();
-
 app.use(express.json());
 app.use(cookieParser());
+const allowOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: allowOrigin,
     credentials: true,
-  })
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
 );
+
+// Public routes
+app.use("/api", authRoutes);
+
+//counts statictics of employees
+app.use("/api/stats", statsRoutes);
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("login_token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.json({ message: "Logged out successfully" });
+});
 
 // Run admin seed before the server starts
 seedAdmin().then(() => {
   console.log("🔑 Admin seed check completed.");
-
-  // Public routes
-  app.use("/", authRoutes);
 
   // Protected routes
   app.get("/dashboard", verifyToken, (req, res) => {
@@ -69,7 +84,7 @@ seedAdmin().then(() => {
       if (namePrefix) {
         const query = namePrefix.toLowerCase();
         cities = cities.filter((city) =>
-          city.name.toLowerCase().includes(query)
+          city.name.toLowerCase().includes(query),
         );
       }
 
@@ -95,14 +110,14 @@ seedAdmin().then(() => {
 
     try {
       const response = await axios.get(
-        "https://psgc.gitlab.io/api/municipalities"
+        "https://psgc.gitlab.io/api/municipalities",
       );
       let municipalities = response.data;
 
       if (namePrefix) {
         const query = namePrefix.toLowerCase();
         municipalities = municipalities.filter((mun) =>
-          mun.name.toLowerCase().includes(query)
+          mun.name.toLowerCase().includes(query),
         );
       }
 
@@ -138,18 +153,6 @@ seedAdmin().then(() => {
       console.error("Error fetching participants:", err.message);
       res.status(500).json({ error: "Failed to fetch participants" });
     }
-  });
-
-  //counts statictics of employees
-  app.use("/api/stats", statsRoutes);
-
-  app.post("/logout", (req, res) => {
-    res.clearCookie("token", {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
-    });
-    res.json({ message: "Logged out successfully" });
   });
 
   const PORT = process.env.PORT || 5000;

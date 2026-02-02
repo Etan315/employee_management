@@ -6,10 +6,11 @@ export default function participantsList(query) {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
+    const API_URL = 'http://localhost:5000/api';
     const fetchData = async () => {
       try {
         // Fetch all participants
-        const response = await axios.get("http://localhost:5000/api/participants");
+        const response = await axios.get(`${API_URL}/participants`);
         let data = response.data;
 
         // Filter locally by name match if a query exists

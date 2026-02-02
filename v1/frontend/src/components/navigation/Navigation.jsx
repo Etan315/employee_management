@@ -7,7 +7,7 @@ import Logo from "./../../icons/ic-logo.svg";
 import Navtoggle from "./../../icons/ic-sidebar.svg";
 import IcHome from "../../icons/ic-home.svg" ;
 import IcManage from "../../icons/ic-manage.svg" ;
-import IcCalender from "../../icons/ic-calendar.svg" ;
+import IcCalender from "../../icons/ic-calendar.svg?react" ;
 import IcNotification from "../../icons/ic-notification.svg" ;
 import IcControl from "../../icons/ic-control.svg" ;
 import IcHelp from "../../icons/ic-help.svg" ;
@@ -67,7 +67,7 @@ function Navigation() {
           </li>
           <li className="logo nav-logo event">
             <Link to='/events'>
-              <img src={IcCalender} alt="logo" />
+              <IcCalender/>
               <span>Events</span>
             </Link>
           </li>

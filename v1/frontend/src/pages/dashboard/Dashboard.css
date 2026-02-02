@@ -63,6 +63,12 @@ div.text span {
   display: flex;
   flex-direction: row;
   gap: 50px;
+  flex-wrap: wrap;
+}
+
+.logs-group > div {
+  flex: 1;
+  min-width: 400px;
 }
 
 .logs.upcoming-event,
@@ -131,8 +137,8 @@ li.li-add button {
 }
 
 li.li-add button:hover {
-    background: var(--gradient);
-    color: white;
+  background: var(--gradient);
+  color: white;
 }
 
 ul.add-list li button {
@@ -171,7 +177,15 @@ button.btn-plus {
   height: 100%;
 }
 
-.add-list.show .li-add:nth-child(1) { transition-delay: 0.1s; }
-.add-list.show .li-add:nth-child(2) { transition-delay: 0.2s; }
-.add-list.show .li-add:nth-child(3) { transition-delay: 0.25s; }
-.add-list.show .li-add:nth-child(4) { transition-delay: 0.30s; }
+.add-list.show .li-add:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.add-list.show .li-add:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.add-list.show .li-add:nth-child(3) {
+  transition-delay: 0.25s;
+}
+.add-list.show .li-add:nth-child(4) {
+  transition-delay: 0.3s;
+}

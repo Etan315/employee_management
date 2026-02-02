@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
-const pool = require("../db/pool");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { findUserByEmail } = require("../services/userService");
+const generateId = require("../utils/generateId.util");
+const User = require("../models/Users.model.js");
 
 // REGISTER
 exports.registerUser = async (req, res) => {
@@ -13,21 +13,19 @@ exports.registerUser = async (req, res) => {
 
   try {
     // Check if user exists
-    const existingUser = await pool.query("SELECT 1 FROM users WHERE email = $1", [email]);
+    const existingUser = await User.findByEmail(email);
+
     if (existingUser.rows.length)
       return res.status(400).json({ error: "Email already registered" });
 
-    const userId = crypto.randomInt(1000000000, 9999999999);
-
+    const userId = generateId();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.query(
-      `INSERT INTO users (user_id, username, email, password, created_at)
-       VALUES ($1, $2, $3, $4, NOW()::timestamp without time zone)`,
-      [userId, username, email, hashedPassword]
-    );
+    await User.create({user_id: userId, username, email, password: hashedPassword})
 
-    res.status(201).json({ message: "User registered successfully", user_id: userId });
+    res
+      .status(201)
+      .json({ message: "User registered successfully", user_id: userId });
   } catch (err) {
     console.error("Error registering user:", err);
     res.status(500).json({ error: "Server error" });
@@ -41,20 +39,22 @@ exports.loginUser = async (req, res) => {
     return res.status(400).json({ error: "Email and password required" });
 
   try {
-    const user = await findUserByEmail(email);
-    if (!user) return res.status(400).json({ error: "Invalid email or password" });
+    const User = await User.findByEmail(email);
+    if (!user)
+      return res.status(400).json({ error: "Invalid email or password" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid email or password" });
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid email or password" });
 
     const token = jwt.sign(
       { user_id: user.user_id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" },
     );
 
-    // ✅ Store token in HTTP-only cookie
-    res.cookie("token", token, {
+    // ✅ token set for authentication of the logged in user, used for verification.
+    res.cookie("login_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -63,11 +63,14 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      user: { user_id: user.user_id, username: user.username, email: user.email },
+      user: {
+        user_id: user.user_id,
+        username: user.username,
+        email: user.email,
+      },
     });
   } catch (err) {
     console.error("Error logging in:", err);
     res.status(500).json({ error: "Server error" });
   }
 };
-

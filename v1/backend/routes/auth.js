@@ -4,15 +4,17 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 const verifyToken = require('../middlewares/verifyToken');
-const { registerUser, loginUser} = require("../controllers/authController");
-const { addEmployee } = require("../controllers/addEmployee");
-const { addEvent } = require("../controllers/addEvent");
-const { addPosition } = require("../controllers/addPosition");
-const { addDepartment } = require("../controllers/addDepartment");
-const { getEmployeeList } = require("../controllers/getEmployeeList");
-const { countActive } = require("../controllers/countActive");
+const { registerUser, loginUser} = require("../controllers/auth.controller");
+const { addEmployee } = require("../controllers/Employee.controller");
+const { addEvent } = require("../controllers/addEvent.controller");
+const { addPosition } = require("../controllers/addPosition.controller");
+const { addDepartment } = require("../controllers/Departments.controller");
+const { getEmployeeList } = require("../controllers/getEmployeeList.controller");
+const { getEventList } = require("../controllers/getEventList.controller");
+const { countActive } = require("../controllers/countActive.controller");
+const { managerController } = require("../controllers/manager.controller");
 
-const uploadPDF = require("../middlewares/uploadPDF");
+// const uploadPDF = require("../middlewares/uploadPDF");
 
 
 router.get("/verify", verifyToken, (req, res) => {
@@ -23,11 +25,13 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 router.post("/addemployee", addEmployee);
-router.post("/addevent", upload.array("attachments"), addEvent);
+router.post("/addevent", upload.array("attachment"), addEvent);
 router.post("/getemployeelist", getEmployeeList);
 
 router.post("/addposition", addPosition);
 router.post("/adddepartment", addDepartment); 
+router.post("/addmanager", managerController);
+router.get("/getEventList", getEventList);
 
 router.get("/counts", countActive);
 

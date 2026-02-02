@@ -14,11 +14,13 @@ export default function AddEventModal({ isOpen, onClose }) {
     description: "",
     city: "",
     municipality: "",
-    participantsId: null, // for backend
+    participantsId: null,
     participantsName: "",
     month: "",
     day: "",
     year: "",
+    timefrom: "",
+    timeto: "",
     attachment: null,
   });
 
@@ -37,7 +39,7 @@ export default function AddEventModal({ isOpen, onClose }) {
   const citySuggestions = useSuggestions(cityQuery, "cities");
   const municipalitySuggestions = useSuggestions(
     municipalityQuery,
-    "municipalities"
+    "municipalities",
   );
   const participantSuggestions = participantsList(participantsQuery);
 
@@ -61,8 +63,8 @@ export default function AddEventModal({ isOpen, onClose }) {
   const handleChange = (e) => {
     const { name, files } = e.target;
 
-    if (name === "attachments") {
-      setFormData((prev) => ({ ...prev, attachments: files })); // store FileList
+    if (name === "attachment") {
+      setFormData((prev) => ({ ...prev, attachment: files })); // store FileList
     } else {
       setFormData((prev) => ({ ...prev, [name]: e.target.value }));
     }
@@ -81,15 +83,16 @@ export default function AddEventModal({ isOpen, onClose }) {
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (key === "attachments") {
-        Array.from(value).forEach((file) => data.append("attachments", file));
+      if (key === "attachment") {
+        Array.from(value).forEach((file) => data.append("attachment", file));
       } else {
         data.append(key, value || "");
       }
     });
 
     try {
-      const res = await fetch("http://localhost:5000/addevent", {
+      const API_URL = "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/addevent`, {
         method: "POST",
         body: data, // no headers needed
       });
@@ -189,33 +192,66 @@ export default function AddEventModal({ isOpen, onClose }) {
         <fieldset className="event-date-and-time">
           <legend>Date and Time</legend>
 
-          <input
-            type="number"
-            name="month"
-            placeholder="MM"
-            aria-label="Month"
-            value={formData.month}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            name="day"
-            placeholder="DD"
-            aria-label="Day"
-            value={formData.day}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            name="year"
-            placeholder="YYYY"
-            aria-label="Year"
-            value={formData.year}
-            onChange={handleChange}
-            required
-          />
+          <div className="date">
+            <input
+              type="number"
+              name="month"
+              placeholder="MM"
+              aria-label="Month"
+              value={formData.month}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="day"
+              placeholder="DD"
+              aria-label="Day"
+              value={formData.day}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="year"
+              placeholder="YYYY"
+              aria-label="Year"
+              value={formData.year}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="time">
+            <div className="timefrom">
+              <label htmlFor="timefrom">From: </label>
+              <input
+                id="timefrom"
+                type="time"
+                name="timefrom"
+                step="60"
+                value={formData.timefrom}
+                onChange={handleChange}
+                min="00:00"
+                max="23:59"
+                required
+              />
+            </div>
+
+            <div className="timeto">
+              <label htmlFor="timeto">To: </label>
+              <input
+                id="timeto"
+                type="time"
+                name="timeto"
+                step="60"
+                value={formData.timeto}
+                onChange={handleChange}
+                min="00:00"
+                max="23:59"
+                required
+              />
+            </div>
+          </div>
         </fieldset>
 
         <label htmlFor="attachment">Attachment (PDF)</label>
