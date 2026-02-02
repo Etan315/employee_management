@@ -5,7 +5,7 @@ const upload = multer({ dest: "uploads/" });
 
 const verifyToken = require('../middlewares/verifyToken');
 const { registerUser, loginUser} = require("../controllers/auth.controller");
-const { addEmployee } = require("../controllers/addEmployee.controller");
+const { addEmployee } = require("../controllers/Employee.controller");
 const { addEvent } = require("../controllers/addEvent.controller");
 const { addPosition } = require("../controllers/addPosition.controller");
 const { addDepartment } = require("../controllers/Departments.controller");
