@@ -1,8 +1,8 @@
-import EmployeeList from "../models/EmployeeList.model.js";
+const EmployeeList = require("../models/EmployeeList.model.js");
 
 exports.getEmployeeList = async (req, res) => {
   try {
-    const EmployeeLists =  await EmployeeList.getAll();
+    const EmployeeLists = await EmployeeList.getAll();
 
     res.status(200).json(EmployeeLists);
   } catch (error) {

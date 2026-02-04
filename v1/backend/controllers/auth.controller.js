@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const generateId = require("../utils/generateId.util");
 const User = require("../models/Users.model.js");
 
@@ -39,7 +38,7 @@ exports.loginUser = async (req, res) => {
     return res.status(400).json({ error: "Email and password required" });
 
   try {
-    const User = await User.findByEmail(email);
+    const user = await User.findByEmail(email);
     if (!user)
       return res.status(400).json({ error: "Invalid email or password" });
 
