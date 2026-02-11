@@ -94,10 +94,9 @@ export default function AddEventModal({ isOpen, onClose }) {
       const API_URL = "http://localhost:5000/api";
       const res = await fetch(`${API_URL}/addevent`, {
         method: "POST",
+        credentials: "include",
         body: data, // no headers needed
       });
-
-      if (!res.ok) throw new Error("Failed to submit form");
 
       alert("Event added successfully!");
       onClose();

@@ -6,7 +6,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js"; // Add .js
-import { verifyToken } from "./middlewares/authMiddleware.js"; // Add .js
+import authenticateUser from './middlewares/auth.middleware.js';// Add .js
 import seedAdmin from "./utils/seedAdmin.js";
 import { verifyAdmin } from "./middlewares/verifyAdmin.js"; 
 import statsRoutes from "./routes/auth.js"; 
@@ -20,7 +20,7 @@ const allowOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   cors({
     origin: allowOrigin,
-    credentials: true,
+    credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
@@ -46,31 +46,31 @@ seedAdmin().then(() => {
   console.log("🔑 Admin seed check completed.");
 
   // Protected routes
-  app.get("/dashboard", verifyToken, (req, res) => {
+  app.get("/dashboard", authenticateUser, (req, res) => {
     res.json({ message: "Welcome to Dashboard", user: req.user });
   });
 
-  app.get("/usermanagement", verifyToken, (req, res) => {
+  app.get("/usermanagement", authenticateUser, (req, res) => {
     res.json({ message: "User Management Access", user: req.user });
   });
 
-  app.get("/events", verifyToken, (req, res) => {
+  app.get("/events", authenticateUser, (req, res) => {
     res.json({ message: "events Access", user: req.user });
   });
 
-  app.get("/notification", verifyToken, (req, res) => {
+  app.get("/notification", authenticateUser, (req, res) => {
     res.json({ message: "notification Access", user: req.user });
   });
 
-  app.get("/accesscontrol", verifyToken, verifyAdmin, (req, res) => {
+  app.get("/accesscontrol", authenticateUser, verifyAdmin, (req, res) => {
     res.json({ message: "accesscontrol Access", user: req.user });
   });
 
-  app.get("/support", verifyToken, (req, res) => {
+  app.get("/support", authenticateUser, (req, res) => {
     res.json({ message: "support Access", user: req.user });
   });
 
-  app.get("/settings", verifyToken, (req, res) => {
+  app.get("/settings", authenticateUser, (req, res) => {
     res.json({ message: "Settings Access", user: req.user });
   });
 

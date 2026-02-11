@@ -1,8 +1,10 @@
-const multer = require("multer");
-const path = require("path");
+// middlewares/uploadPDF.js
+import multer from "multer";
+import path from "path";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    // Ensure the folder "pdf" exists in your root directory
     cb(null, "pdf");
   },
   filename: (req, file, cb) => {
@@ -12,10 +14,13 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  // Check extension
   if (path.extname(file.originalname).toLowerCase() !== ".pdf") {
     return cb(new Error("Only PDF files are allowed"), false);
   }
   cb(null, true);
 };
 
-module.exports = multer({ storage, fileFilter });
+// ESM Export
+const uploadPDF = multer({ storage, fileFilter });
+export default uploadPDF;

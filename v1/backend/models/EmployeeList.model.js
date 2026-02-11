@@ -1,4 +1,4 @@
-const pool = require("../db/pool");
+import pool from "../db/pool.js";
 
 const EmployeeList = {
   getAll: async () => {
@@ -7,9 +7,9 @@ const EmployeeList = {
       FROM users u
       LEFT JOIN employees e 
       ON u.user_id = e.user_id;`;
-      const { result } = await pool.query(query);
-      return result;
+    const { result } = await pool.query(query);
+    return result;
   },
 };
 
-module.exports = EmployeeList;
+export default EmployeeList;

@@ -1,11 +1,11 @@
-// services/getCount.js
-const pool = require("../db/pool");
+// services/getCount.service.js
+import pool from "../db/pool.js";
 
-async function getCount() {
+export async function getCount() {
   const [employees, departments, active] = await Promise.all([
     pool.query("SELECT COUNT(*) FROM employees"),
     pool.query("SELECT COUNT(*) FROM departments"),
-    pool.query("SELECT COUNT(*) FROM attendance WHERE is_active = true")
+    pool.query("SELECT COUNT(*) FROM attendance WHERE is_active = true"),
   ]);
 
   return {
@@ -14,5 +14,3 @@ async function getCount() {
     activeEmployees: parseInt(active.rows[0].count),
   };
 }
-
-module.exports = { getCount };

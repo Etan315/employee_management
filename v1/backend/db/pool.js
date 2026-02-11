@@ -1,4 +1,5 @@
-const { Pool } = require("pg");
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -9,4 +10,4 @@ const pool = new Pool({
   ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
 });
 
-module.exports = pool;
+export default pool;

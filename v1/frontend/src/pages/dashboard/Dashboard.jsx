@@ -65,9 +65,8 @@ function Dashboard() {
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await EventList();
-        console.log("event-data: ", data);
-        setEvents(data);
+        const event_data = await EventList();
+        setEvents(event_data);
       } catch (err) {
         console.error("Failed to fetch", err);
       } finally {

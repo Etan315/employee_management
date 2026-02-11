@@ -1,15 +1,15 @@
-import pool from "../db/pool.js";
-import { generateId } from "../utils/generateId.util.js";
+import { generateId } from "../utils/generateId.util.js";  
+import Position from "../models/Position.model.js";
 
 export const addPosition = async (req, res) => { 
   const data = req.body;
   const position_id = generateId();
 
   try {
-    const query = `INSERT INTO positions (position_id, position_name) VALUES ($1, $2)`;
-    const values = [position_id, data.position];
-
-    await pool.query(query, values);
+    await Position.addPosition({
+      position_id: position_id,
+      position_name: data.position_name
+    });
 
     res.status(201).json({
       message: "Position added successfully",

@@ -1,11 +1,10 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const generateId = require("../utils/generateId.util");
-const User = require("../models/Users.model.js");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/Users.model.js";
+import { generateId } from "../utils/generateId.util.js";
 
 // REGISTER
-exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password)
@@ -33,13 +32,13 @@ exports.registerUser = async (req, res) => {
 };
 
 //LOGIN
-exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ error: "Email and password required" });
 
   try {
-    const User = await User.findByEmail(email);
+    const user = await User.findByEmail(email);
     if (!user)
       return res.status(400).json({ error: "Invalid email or password" });
 

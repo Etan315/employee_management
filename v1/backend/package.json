@@ -1,8 +1,9 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
   "dependencies": {
     "axios": "^1.13.2",
-    "axois": "^0.0.1-security",
-    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -14,15 +15,12 @@
     "uuid": "^13.0.0"
   },
   "scripts": {
+    "start": "node server.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:client": "jest"
+    "test:coverage": "jest --coverage"
   },
   "devDependencies": {
     "jest": "^30.2.0"
-  },
-  "presets": [
-    "@babel/preset-env"
-  ]
+  }
 }

@@ -1,7 +1,6 @@
 // src/components/hooks/useParticipantsList.js
 import { useState, useEffect } from "react";
-import axios from "axios";
-
+import api from "../../api/axiosInstance.api.js";
 export default function participantsList(query) {
   const [participants, setParticipants] = useState([]);
 
@@ -10,7 +9,7 @@ export default function participantsList(query) {
     const fetchData = async () => {
       try {
         // Fetch all participants
-        const response = await axios.get(`${API_URL}/participants`);
+        const response = await api.get(`${API_URL}/participants`);
         let data = response.data;
 
         // Filter locally by name match if a query exists
