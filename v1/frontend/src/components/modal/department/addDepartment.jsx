@@ -1,6 +1,7 @@
 import Modal from "../Modal";
 import IcPlus from "../../../icons/ic-plus.svg";
 import IcWork from "../../../icons/ic-work.svg";
+import AddDepartment  from "../../../api/department.api";
 import { useState } from "react";
 import "./add-department.css";
 
@@ -19,28 +20,23 @@ export default function addDepartment({ isOpen, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const API_URL = 'http://localhost:5000/api';
 
     try {
-      const res = await fetch(`${API_URL}/adddepartment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      });
+      const res = await AddDepartment(formData);
 
       if (!res.ok) throw new Error("Failed to submit form");
 
       alert("Event added successfully!");
       onClose();
       setFormData({
-        position: "",
+        department: "",
       });
     } catch (error) {
       console.error("Submission error:", error);
       alert("Something went wrong. Please try again.");
     }
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <header className="modal-header">
