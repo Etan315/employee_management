@@ -1,5 +1,5 @@
-const pool = require("../db/pool.js");
-const { generateId } = require("../utils/generateId.util.js");
+import pool from"../db/pool.js";
+import { generateId } from "../utils/generateId.util.js";
 
 const Logger = {
   log: async (user_id, action, details, target_role) => {
@@ -14,4 +14,4 @@ const Logger = {
   },
 };
 
-module.exports = Logger;
+export default Logger;
