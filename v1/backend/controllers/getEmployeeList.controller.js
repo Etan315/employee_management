@@ -1,6 +1,6 @@
-const EmployeeList = require("../models/EmployeeList.model.js");
+import EmployeeList from "../models/EmployeeList.model.js";
 
-exports.getEmployeeList = async (req, res) => {
+export const getEmployeeList = async (req, res) => {
   try {
     const EmployeeLists = await EmployeeList.getAll();
 

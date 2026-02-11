@@ -1,7 +1,7 @@
-const Event = require("../models/Event.model");
-const generateId = require("../utils/generateId.util");
+import Event from "../models/Event.model.js";
+import { generateId } from "../utils/generateId.util.js";
 
-exports.getEventList = async (req, res) => {
+export const getEventList = async (req, res) => {
   try {
     const events = await Event.getAll();
 
@@ -12,7 +12,7 @@ exports.getEventList = async (req, res) => {
   }
 };
 
-exports.addEvent = async (req, res) => {
+export const addEvent = async (req, res) => {
   const data = req.body;
 
   try {

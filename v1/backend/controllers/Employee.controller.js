@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
-const { generateId } = require("../utils/generateId.util.js");
-const Employee = require("../models/Employee.model.js");
-const pool = require("../db/pool.js");
+import bcrypt from 'bcryptjs';
+import { generateId } from "../utils/generateId.util.js";
+import Employee from "../models/Employee.model.js";
+import pool from "../db/pool.js";
 
-exports.addEmployee = async (req, res) => {
+export const addEmployee = async (req, res) => {
   const data = req.body;
   let client;
 

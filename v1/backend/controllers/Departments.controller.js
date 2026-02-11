@@ -1,8 +1,8 @@
-const Department = require("../models/Department.model.js");
-const { generateId } = require("../utils/generateId.util.js");
-const Logger = require("../services/logger.service"); 
+import Department from"../models/Department.model.js";
+import { generateId } from"../utils/generateId.util.js";
+import Logger from"../services/logger.service.js";
 
-exports.addDepartment = async (req, res) => {
+export const addDepartment = async (req, res) => {
   const data = req.body;
   const department_id = generateId();
 
@@ -14,7 +14,7 @@ exports.addDepartment = async (req, res) => {
 
     // this will get the user_id from the verified token, which is set in the auth middleware
     const performerId = req.user?.user_id;
-    
+
     Logger.log(
       performerId, 
       'CREATE_DEPARTMENT', 

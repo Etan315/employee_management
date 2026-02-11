@@ -1,6 +1,6 @@
-const { getCount } = require("../services/getCount.service");
+import { getCount } from "../services/getCount.service.js";
 
-async function countActive(req, res) {
+export async function countActive(req, res) {
   try {
     const stats = await getCount();
     res.json(stats);
@@ -9,5 +9,3 @@ async function countActive(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
-
-module.exports = { countActive };
