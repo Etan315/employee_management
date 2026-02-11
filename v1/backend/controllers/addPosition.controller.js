@@ -1,6 +1,5 @@
-const pool = require("../db/pool.js");
-const { generateId }= require("../utils/generateId.util.js");
-const Position = require("../models/Position.model.js")
+import { generateId } from "../utils/generateId.util.js";  
+import Position from "../models/Position.model.js";
 
 export const addPosition = async (req, res) => { 
   const data = req.body;
