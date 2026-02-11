@@ -1,4 +1,4 @@
-const pool = require("../db/pool.js");
+import pool from "../db/pool.js";
 
 const User = {
   findByEmail: async (email) => {
@@ -18,4 +18,4 @@ const User = {
   },
 };
 
-module.exports = User;
+export default User;

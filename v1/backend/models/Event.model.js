@@ -1,4 +1,4 @@
-const pool = require("../db/pool");
+import pool from "../db/pool.js";
 
 const Event = {
   getAll: async () => {
@@ -34,4 +34,4 @@ const Event = {
   },
 };
 
-module.exports = Event;
+export default Event;

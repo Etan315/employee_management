@@ -1,4 +1,4 @@
-const pool = require("../db/pool.js");
+import pool from "../db/pool.js";
 
 const Position = {
     addPosition: async (PositionData) => {
@@ -11,4 +11,4 @@ const Position = {
     }
 };
 
-module.exports = Position;
+export default Position;
