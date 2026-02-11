@@ -24,13 +24,13 @@ export default function addDepartment({ isOpen, onClose }) {
     try {
       const res = await AddDepartment(formData);
 
-      if (!res.ok) throw new Error("Failed to submit form");
-
-      alert("Event added successfully!");
-      onClose();
-      setFormData({
-        department: "",
-      });
+      if (res.status === 201 || res.message) { 
+        alert("Department added successfully!");
+        onClose();
+        setFormData({
+          department: "",
+        });
+      }
     } catch (error) {
       console.error("Submission error:", error);
       alert("Something went wrong. Please try again.");
