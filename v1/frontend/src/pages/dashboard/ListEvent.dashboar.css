@@ -19,7 +19,7 @@
   box-shadow:
     rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .left.events {
@@ -29,6 +29,7 @@
   align-items: flex-start;
   gap: 10px;
   width: 350px;
+  text-align: left;
 }
 
 .sched-time > p,
