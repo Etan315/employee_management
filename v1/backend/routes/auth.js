@@ -20,6 +20,8 @@ router.get("/verify", verifyToken, (req, res) => {
   res.json({ success: true, user: req.user });
 });
 
+router.use(verifyToken);
+
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
@@ -28,7 +30,7 @@ router.post("/addevent", upload.array("attachment"), addEvent);
 router.post("/getemployeelist", getEmployeeList);
 
 router.post("/addposition", addPosition);
-router.post("/adddepartment", addDepartment); 
+router.post("/adddepartment", verifyToken, addDepartment); 
 router.post("/addmanager", managerController);
 router.get("/getEventList", getEventList);
 

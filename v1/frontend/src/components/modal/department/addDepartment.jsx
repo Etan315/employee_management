@@ -25,6 +25,7 @@ export default function addDepartment({ isOpen, onClose }) {
       const res = await fetch(`${API_URL}/adddepartment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
 
