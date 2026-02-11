@@ -1,4 +1,4 @@
-// services/getCount.js
+// services/getCount.service.js
 const pool = require("../db/pool");
 
 async function getCount() {
