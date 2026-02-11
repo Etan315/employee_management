@@ -1,4 +1,4 @@
-const { getCount } = require("../services/getCount");
+const { getCount } = require("../services/getCount.service");
 
 async function countActive(req, res) {
   try {
