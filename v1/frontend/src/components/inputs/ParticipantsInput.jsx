@@ -1,4 +1,6 @@
 function ParticipantsInput({ label, value, onChange, query, setQuery, suggestions }) {
+  console.log("suggesstions: ", suggestions);
+  
   const handleChange = (e) => {
     const typedValue = e.target.value;
     setQuery(typedValue);
@@ -19,7 +21,7 @@ function ParticipantsInput({ label, value, onChange, query, setQuery, suggestion
         list="participants-list"
       />
       <datalist id="participants-list">
-        {suggestions.map((item) => (
+        {suggestions?.map((item) => (
           <option key={item.user_id} value={item.username} />
         ))}
       </datalist>
