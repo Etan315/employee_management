@@ -1,37 +1,26 @@
-// src/components/hooks/useParticipantsList.js
 import { useState, useEffect } from "react";
-import getParticipantsList from "../../api/participantsList.api.js";
+import getParticipantsList from "../api/participants.api"; 
 
-export default function participantsList(query) {
-  const [participants, setParticipants] = useState([]);
+export default function participantsList(query) { 
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchParticipants = async () => {
       try {
-        // Fetch all participants
-        const response = await getParticipantsList();
-        let data = response.data;
-
-        // Filter locally by name match if a query exists
-        if (query && query.trim() !== "") {
-          const lowerQuery = query.toLowerCase();
-          data = data.filter(
-            (item) =>
-              item.first_name?.toLowerCase().includes(lowerQuery) ||
-              item.last_name?.toLowerCase().includes(lowerQuery) ||
-              item.username?.toLowerCase().includes(lowerQuery)
-          );
-        }
-
-        setParticipants(data);
+        const data = await getParticipantsList();
+        
+        // Added optional chaining (?.) to prevent crashes if username is null
+        const filtered = data.filter(user => 
+          user.username?.toLowerCase().includes(query.toLowerCase())
+        );
+        setSuggestions(filtered);
       } catch (err) {
-        console.error("Error fetching participants:", err.message);
-        setParticipants([]);
+        console.error("Hook error:", err);
       }
     };
 
-    fetchData();
-  }, [query]);
+    fetchParticipants();
+  }, [query]); 
 
-  return participants;
+  return suggestions;
 }

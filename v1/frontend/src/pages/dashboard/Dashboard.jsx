@@ -11,7 +11,7 @@ import AddEmployeeModal from "../../components/modal/AddEmployeeModal";
 import AddEventModal from "../../components/modal/event/AddEventModal";
 import AddPosition from "../../components/modal/position/addPosition";
 import AddDepartment from "../../components/modal/department/addDepartment";
-import EventList from "../../api/getEvent";
+import {getEvent as EventList} from "../../api/Event.api.js";
 import EventListItems from "../../components/EventList";
 
 import QuickActions from "../../components/navigation/QuickActions";

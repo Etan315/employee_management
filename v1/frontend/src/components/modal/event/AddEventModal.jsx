@@ -7,6 +7,7 @@ import IcEvent from "../../../icons/ic-event.svg";
 import "./addEventModal.css";
 import DropdownInput from "../../inputs/DropdownInput.jsx";
 import ParticipantsInput from "../../inputs/ParticipantsInput.jsx";
+import { addEvent } from "../../../api/Event.api.js";
 
 export default function AddEventModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ export default function AddEventModal({ isOpen, onClose }) {
     municipalityQuery,
     "municipalities",
   );
+
   const participantSuggestions = participantsList(participantsQuery);
 
   const handleParticipantChange = (user) => {
@@ -70,51 +72,48 @@ export default function AddEventModal({ isOpen, onClose }) {
     }
   };
 
-  const handleChangeList = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value, // e.target.value can be an object {username, user_id} if you adopt that
-    }));
-  };
 
-  // Handle form submission
+  // Handle adding of event
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "attachment") {
-        Array.from(value).forEach((file) => data.append("attachment", file));
+        if (value) {
+          Array.from(value).forEach((file) => data.append("attachment", file));
+        }
       } else {
-        data.append(key, value || "");
+        data.append(key, value !== null ? value : "");
       }
     });
 
     try {
-      const API_URL = "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/addevent`, {
-        method: "POST",
-        credentials: "include",
-        body: data, // no headers needed
-      });
+      const res = await addEvent(data);
 
-      alert("Event added successfully!");
-      onClose();
-
-      setFormData({
-        title: "",
-        description: "",
-        city: "",
-        municipality: "",
-        participantsId: "",
-        month: "",
-        day: "",
-        year: "",
-        attachment: null,
-      });
+      // CHECK IF THE SERVER ACTUALLY SUCCEEDED
+      if (res.ok) {
+        alert("Event added successfully!");
+        onClose();
+        setFormData({
+          title: "",
+          description: "",
+          city: "",
+          municipality: "",
+          participantsId: "",
+          month: "",
+          day: "",
+          year: "",
+          attachment: null,
+        });
+      } else {
+        // If the server returned 401, 403, 500, etc.
+        const errorData = await res.json();
+        alert(`Error: ${errorData.error || "Failed to add event"}`);
+      }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong");
+      alert("Network error. Please check your connection.");
     }
   };
 

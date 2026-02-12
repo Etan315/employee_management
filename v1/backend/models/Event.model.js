@@ -11,7 +11,7 @@ const Event = {
     const query = `
       INSERT INTO events (
         event_id, title, description, city, municipality, participants, 
-        event_date,time_start, time_end, attachment_url, created_at
+        event_date, time_start, time_end, attachment_url, created_at
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW()::timestamp without time zone
       ) Returning *;
