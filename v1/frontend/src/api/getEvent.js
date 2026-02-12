@@ -3,7 +3,7 @@ const API_URL = 'http://localhost:5000/api';
 
 const getEvent = async () => {
     try {
-        const response = await api.get(`${API_URL}/getEventList`);
+        const response = await api.get("/getEventList");
         return response.data;
     } catch (error) {
         console.error('Error fetching the list of events: ', error);
