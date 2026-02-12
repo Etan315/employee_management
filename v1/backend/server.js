@@ -137,24 +137,6 @@ seedAdmin().then(() => {
     }
   });
 
-  app.get("/api/participants", async (req, res) => {
-    try {
-      const result = await pool.query(`
-      SELECT 
-        u.user_id,
-        u.username,
-        e.first_name,
-        e.last_name
-      FROM users u
-      LEFT JOIN employees e ON u.user_id = e.user_id;
-    `);
-      res.status(200).json(result.rows);
-    } catch (err) {
-      console.error("Error fetching participants:", err.message);
-      res.status(500).json({ error: "Failed to fetch participants" });
-    }
-  });
-
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 });

@@ -11,6 +11,7 @@ import { getEmployeeList } from "../controllers/getEmployeeList.controller.js";
 import { getEventList, addEvent } from "../controllers/Event.controller.js";
 import { countActive } from "../controllers/countActive.controller.js";
 import { managerController } from "../controllers/manager.controller.js";
+import { ParticipantsList } from "../controllers/ParticipantsList.controller.js";
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -34,6 +35,7 @@ router.post("/addposition", addPosition);
 router.post("/adddepartment", addDepartment);
 router.post("/addmanager", managerController);
 router.get("/getEventList", getEventList);
+router.get("/participants", ParticipantsList);
 
 router.get("/counts", countActive);
 
