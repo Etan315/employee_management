@@ -1,5 +1,4 @@
-import api from "../api/axiosInstance.api.js";
-const API_URL = "http://localhost:5000/api";
+import api from "./axiosInstance.api";
 
 const getParticipantsList = async () => {
     try {

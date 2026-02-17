@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import IcPlus from "../../../icons/ic-plus.svg";
 import IcWork from "../../../icons/ic-work.svg";
 import "./add-postion.css";
+import position from "../../../api/position.api";
 
 export default function addPosition({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -20,22 +21,18 @@ export default function addPosition({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const API_URL = 'http://localhost:5000/api';
 
     try {
-      const res = await fetch(`${API_URL}/addposition`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await position(formData);
 
-      if (!res.ok) throw new Error("Failed to submit form");
-
-      alert("Event added successfully!");
-      onClose();
-      setFormData({
-        position: "",
-      });
+      if (res.status === 201 || res.message) { 
+        alert("Position added successfully!");
+        onClose();
+        setFormData({
+          position: "",
+        });
+      }
+      
     } catch (error) {
       console.error("Submission error:", error);
       alert("Something went wrong. Please try again.");

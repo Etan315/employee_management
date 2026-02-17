@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getParticipantsList from "../api/participants.api"; 
+import getParticipantsList from "../../api/participantsList.api"; 
 
 export default function participantsList(query) { 
   const [suggestions, setSuggestions] = useState([]);
